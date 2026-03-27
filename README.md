@@ -25,7 +25,7 @@ This table highlights the key differences between the original **JohnSnowLabs Me
 | **Execution Environment** | Apache Spark cluster (distributed computing) | Google Colab (T4 GPU) |
 | **Text Splitter** | `JohnSnowLabsLangChainCharSplitter` (Spark-NLP) | `RecursiveCharacterTextSplitter` (LangChain) |
 | **Embedding Model** | `JohnSnowLabsLangChainEmbedder` (`en.embed_sentence.instructor_base`) | HuggingFace `BAAI/bge-large-en-v1.5` (GPU) |
-| **Vector Store** | FAISS (built or loaded from pre-built `.vs` zip) | FAISS (built or loaded from pre-built `.src` folder) |
+| **Vector Store** | FAISS (built or loaded from pre-built `.vs` zip) | FAISS (built or loaded pre-built from `.src` folder) |
 | **Retrieval Strategy** | FAISS (similarity, MMR, score threshold, filter) + BM25 + Ensemble | FAISS with MMR (`k=4`, `fetch_k=10`, `lambda_mult=0.75`) |
 | **LLM Used** | OpenAI `gpt-3.5-turbo-16k` / Llama-2 / Zephyr-7B | Groq API (`QWEN3 32B` model — fast inference) |
 | **Prompt Engineering** | Custom `PromptTemplate` with source citation | Custom `ChatPromptTemplate` with structured template |
