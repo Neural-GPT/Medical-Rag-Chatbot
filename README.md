@@ -10,7 +10,35 @@ A Retrieval-Augmented Generation (RAG) chatbot for answering medical questions o
 | **Completeness**          | 9              | Covers diabetes mellitus, neonatal diabetes, and CDI; could better separate type 1 vs type 2 causes.                                                         |
 | **Accuracy**              | 9              | Correct per context; minor phrasing could be sharper (“impaired insulin secretion and/or action” instead of “deficiency in insulin production or function”).   |
 | **Clarity / Conciseness** | 9              | Structured and readable; “Note” could be integrated more smoothly.                                                                                           |
+## 📊 Notebook Comparison: Industrial vs. My Implementation
 
+This table highlights the key differences between the original **JohnSnowLabs Medical Chatbot RAG** notebook i used as reference and **My Implementation** (`usage.ipynb`), built as part of an internship application.
+
+---
+
+## 🔍 Feature-by-Feature Comparison
+
+| Aspect | 🏭 Original (JohnSnowLabs) | 🔁 My Implementation (`usage.ipynb`) |
+|---|---|---|
+| **Scale & Complexity** | 106 cells — full industrial pipeline | 21 cells — focused, clean reproduction |
+| **Framework / Stack** | JohnSnowLabs (`johnsnowlabs`) + Apache Spark + LangChain | LangChain Community + HuggingFace + Groq |
+| **Execution Environment** | Apache Spark cluster (distributed computing) | Google Colab (T4 GPU) |
+| **Text Splitter** | `JohnSnowLabsLangChainCharSplitter` (Spark-NLP) | `RecursiveCharacterTextSplitter` (LangChain) |
+| **Embedding Model** | `JohnSnowLabsLangChainEmbedder` (`en.embed_sentence.instructor_base`) | HuggingFace `BAAI/bge-large-en-v1.5` (GPU) |
+| **Vector Store** | FAISS (built or loaded from pre-built `.vs` zip) | FAISS (built or loaded from pre-built `.vs` folder) |
+| **Retrieval Strategy** | FAISS (similarity, MMR, score threshold, filter) + BM25 + Ensemble | FAISS with MMR (`k=4`, `fetch_k=8`, `lambda_mult=0.75`) |
+| **LLM Used** | OpenAI `gpt-3.5-turbo-16k` / Llama-2 / Zephyr-7B | Groq API (`qwen` model — fast inference) |
+| **Prompt Engineering** | Custom `PromptTemplate` with source citation | Custom `ChatPromptTemplate` with structured template |
+| **Dataset** | PubMed Diabetes (1000 abstracts) + EPFL Clinical Guidelines (100 entries) | PubMed Diabetes (1000 abstracts) |
+| **Data Loader** | `PySparkDataFrameLoader` (Spark DataFrame) | `DataFrameLoader` (Pandas DataFrame) |
+| **Retriever Types** | FAISS, BM25, Ensemble, MMR, score-threshold, metadata-filtered | FAISS with MMR |
+| **Long Context Handling** | `LongContextReorder` to mitigate "lost in the middle" issue | Not implemented |
+| **Evaluation** | No formal evaluation section | LLM-as-Judge evaluation using ChatGPT (Relevance, Completeness, Accuracy, Clarity) |
+| **Modular Code** | Monolithic notebook cells | Modular `src/` package (`preprocessing.py`, `vector.py`, `ask_rag.py`) |
+| **Reproducibility** | Requires JohnSnowLabs license + Spark setup | Fully open-source, runs on free Colab GPU |
+| **Speed Benchmarking** | CPU vs. GPU embedding speed comparison (HuggingFace vs JSL) | Not benchmarked |
+
+---
 
 ## What this project does?
 
