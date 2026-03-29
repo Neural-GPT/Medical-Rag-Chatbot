@@ -48,7 +48,7 @@ This project implements an end-to-end RAG pipeline for medical question answerin
 
 **- Splits documents into chunks**
 
-**- Generates embeddings using BGE-small**
+**- Generates embeddings using BGE-large**
 
 **- Stores vectors in FAISS**
 
